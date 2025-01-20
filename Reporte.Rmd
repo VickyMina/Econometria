@@ -1,0 +1,131 @@
+---
+title: "Trabajo en grupo"
+author: "Matheo Morales, Vicky Mina y Jean Carlos Muñoz"
+date: "2025-01-17"
+output: html_document
+---
+```{r}
+library(ggplot2)
+```
+
+
+## Comprobación de la ley de los grandes números 
+
+```{r}
+## Importar la base de datos
+load("C:/GitHub/Econometria/data/educ_anios_2022.RData")
+hist(educ_anios_2022, main = "Escolaridad")
+
+```
+
+```{r}
+## Media y varianza de la población
+mean(educ_anios_2022)
+var(educ_anios_2022)
+```
+```{r}
+set.seed(123)
+N <- 1000
+x <- sample(educ_anios_2022,N, replace = T)
+head(cumsum(x), 20)
+head(1:1000,20)
+x_bar <- cumsum(x) / (1:N)
+```
+
+```{r}
+plot(1:N, x_bar, type = "l", xlab = "Numero de simulaciones", ylab = "Media acumulativa")
+abline(h = mean(educ_anios_2022), col = "blue", lwd = 1)
+```
+
+## Teorema del límite central
+
+```{r}
+set.seed(123)
+simulaciones <-  10000
+x_bar_10 <- replicate(10000, mean(sample(educ_anios_2022,size = 10, replace = T)))
+
+
+media_teorica <- mean(educ_anios_2022)
+sd_teorica <- sqrt((var(educ_anios_2022)/10))
+
+# Crear el gráfico de densidad de las medias muestrales
+density_x_bar_10 <- hist(x_bar_10, freq = FALSE, breaks = 30,
+	 main = "Densidad de X bar cuando n=10",
+	 xlab = "Media", ylab = "Frecuencia", col = "lightblue", border = "black")
+curve(dnorm(x, mean = media_teorica, sd = sd_teorica), col = "red", lwd = 2, add = TRUE)
+
+
+```
+
+```{r}
+mean(x_bar_10)
+var(x_bar_10)
+```
+
+
+```{r}
+```
+
+
+```{r}
+x_bar_30 <- replicate(10000, mean(sample(educ_anios_2022,size = 30, replace = T)))
+
+
+media_teorica <- mean(educ_anios_2022)
+sd_teorica <- sqrt((var(educ_anios_2022)/30))
+
+# Crear el gráfico de densidad de las medias muestrales
+density_x_bar_30 <- hist(x_bar_30, freq = FALSE, breaks = 30,
+	 main = "Densidad de X bar cuando n=30",
+	 xlab = "Media", ylab = "Frecuencia", col = "lightblue", border = "black")
+curve(dnorm(x, mean = media_teorica, sd = sd_teorica), col = "red", lwd = 2, add = TRUE)
+
+```
+
+```{r}
+mean(x_bar_30)
+var(x_bar_30)
+```
+
+```{r}
+x_bar_100 <- replicate(10000, mean(sample(educ_anios_2022,size = 100, replace = T)))
+
+
+media_teorica <- mean(educ_anios_2022)
+sd_teorica <- sqrt((var(educ_anios_2022)/100))
+
+# Crear el gráfico de densidad de las medias muestrales
+density_x_bar_100 <- hist(x_bar_100, freq = FALSE, breaks = 30,
+	 main = "Densidad de X bar cuando n=100",
+	 xlab = "Media", ylab = "Frecuencia", col = "lightblue", border = "black")
+curve(dnorm(x, mean = media_teorica, sd = sd_teorica), col = "red", lwd = 2, add = TRUE)
+```
+
+```{r}
+mean(x_bar_100)
+var(x_bar_100)
+```
+
+
+```{r}
+x_bar_1000 <- replicate(10000, mean(sample(educ_anios_2022,size = 1000, replace = T)))
+
+
+media_teorica <- mean(educ_anios_2022)
+sd_teorica <- sqrt((var(educ_anios_2022)/1000))
+
+# Crear el gráfico de densidad de las medias muestrales
+density_x_bar_1000 <- hist(x_bar_1000, freq = FALSE, breaks = 30,
+	 main = "Densidad de X bar cuando n=1000",
+	 xlab = "Media", ylab = "Frecuencia", col = "lightblue", border = "black")
+curve(dnorm(x, mean = media_teorica, sd = sd_teorica), col = "red", lwd = 2, add = TRUE)
+```
+```{r}
+mean(x_bar_1000)
+var(x_bar_1000)
+```
+## Conclusión:
+### La media de X barra tiende a ser igual a la media teórica a medida que aumenta la muestra. 
+### La varianza de X barra es menor a medida que aumenta la muestra.
+
+
